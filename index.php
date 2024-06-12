@@ -21,10 +21,10 @@ require './components/navbar.php';
             <thead>
             <tr>
                 <?php foreach ($data['columns'] as $column): ?>
-                    <th><a href="?table=<?= $selectedTable ?>&sort=<?= $column ?>"><?= normalizeTestView($column) ?></a></th>
+                    <th><a href="?table=<?= $selectedTable ?>&sort=<?= $column ?>"><?= normalizeTextView($column) ?></a></th>
                 <?php endforeach; ?>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Bearbeiten</th>
+                <th>Löschen</th>
             </tr>
             </thead>
             <tbody>
@@ -33,8 +33,8 @@ require './components/navbar.php';
                     <?php foreach ($data['columns'] as $column): ?>
                         <td><?= $row[$column] ?></td>
                     <?php endforeach; ?>
-                    <td><a href="./crud/edit_record.php?table=<?= $selectedTable ?>&id=<?= array_values($row)[0] ?>" class="btn btn-warning">Edit</a></td>
-                    <td><a href="./crud/delete_record.php?table=<?= $selectedTable ?>&id=<?= array_values($row)[0] ?>" class="btn btn-danger">Delete</a></td>
+                    <td><a href="./crud/edit_record.php?table=<?= $selectedTable ?>&id=<?= array_values($row)[0] ?>" class="btn btn-warning">Bearbeiten</a></td>
+                    <td><a href="./crud/delete_record.php?table=<?= $selectedTable ?>&id=<?= array_values($row)[0] ?>" class="btn btn-danger">Löschen</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

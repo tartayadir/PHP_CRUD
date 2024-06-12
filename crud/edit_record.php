@@ -29,15 +29,15 @@ require '../components/navbar.php';
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5">Edit Record in <?= $selectedTable ?></h1>
+    <h1 class="mt-5">Eintrag bearbeiten in <?= $selectedTable ?></h1>
     <form method="post">
         <?php foreach ($columns as $column): ?>
             <div class="form-group">
-                <label for="<?= $column ?>"><?= normalizeTestView($column) ?></label>
+                <label for="<?= $column ?>"><?= normalizeTextView($column) ?></label>
                 <input type="text" class="form-control" id="<?= $column ?>" name="<?= $column ?>" value="<?= $record[$column] ?>" required>
             </div>
         <?php endforeach; ?>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary">Änderungen speichern</button>
     </form>
 </div>
 </body>

@@ -27,15 +27,15 @@ require '../components/navbar.php';
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5">Add Record to <?= normalizeTestView($selectedTable) ?></h1>
+    <h1 class="mt-5">Datensatz hinzufügen zu <?= normalizeTextView($selectedTable) ?></h1>
     <form method="post">
         <?php foreach ($columns as $column): ?>
             <div class="form-group">
-                <label for="<?= $column ?>"><?= normalizeTestView($column) ?></label>
+                <label for="<?= $column ?>"><?= normalizeTextView($column) ?></label>
                 <input type="text" class="form-control" id="<?= $column ?>" name="<?= $column ?>" required>
             </div>
         <?php endforeach; ?>
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Hinzufügen</button>
     </form>
 </div>
 </body>
