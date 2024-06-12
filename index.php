@@ -16,19 +16,7 @@ require './components/navbar.php';
 ?>
 
     <body">
-    <div class="container p-3 my-3 border ">
-        <div class="btn-group mb-3">
-            <?php foreach ($tables as $table): ?>
-                <a href="?table=<?= $table ?>" class="btn btn-secondary"><?= normalizeTestView($table) ?></a>
-            <?php endforeach; ?>
-        </div>
-
-        <form method="get" class="mb-3">
-            <input type="hidden" name="table" value="<?= $selectedTable ?>">
-            <input type="text" name="search" value="<?= $search ?>" placeholder="Search..." class="form-control">
-            <button type="submit" class="btn btn-primary mt-2">Search</button>
-        </form>
-
+    <div class="container p-3 my-3 border">
         <table class="table table-bordered">
             <thead>
             <tr>

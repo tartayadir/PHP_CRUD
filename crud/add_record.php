@@ -13,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ../index.php?table=' . $selectedTable);
     exit;
 }
+
+require '../components/navbar.php';
 ?>
 
 <!DOCTYPE html>
@@ -38,3 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 </body>
 </html>
+
+<?php
+require '../components/footer.php';
+?>
