@@ -6,12 +6,28 @@ function getTables($pdo) {
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
-function getTableData($pdo, $table) {
+function getTableData($pdo, $table, $search = '', $sort = '') {
     $stmt = $pdo->prepare("DESCRIBE " . $table);
     $stmt->execute();
     $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    $stmt = $pdo->prepare("SELECT * FROM " . $table);
+    $sql = "SELECT * FROM " . $table;
+    if ($search) {
+        $searchTerms = [];
+        foreach ($columns as $column) {
+            $searchTerms[] = "$column LIKE :search";
+        }
+        $sql .= " WHERE " . implode(' OR ', $searchTerms);
+    }
+
+    if ($sort) {
+        $sql .= " ORDER BY " . $sort;
+    }
+
+    $stmt = $pdo->prepare($sql);
+    if ($search) {
+        $stmt->bindValue(':search', '%' . $search . '%');
+    }
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
