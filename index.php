@@ -1,8 +1,8 @@
 <?php
 require './controller/controller.php';
-$tables = getTables($pdo);
-$selectedTable = $_GET['table'] ?? $tables[0];
-$data = getTableData($pdo, $selectedTable);
+$tables = getTables($GLOBALS['pdo']);
+$selectedTable = isset($_GET['table']) ? $_GET['table'] : $tables[0];
+$data = getTableData($GLOBALS['pdo'], $selectedTable);
 ?>
 
 <!DOCTYPE html>
