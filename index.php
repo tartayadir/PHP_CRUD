@@ -12,10 +12,11 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 $data = getTableData($GLOBALS['pdo'], $selectedTable, $search, $sort);
 
 require './components/header.php';
+require './components/navbar.php';
 ?>
-    <body>
-    <div class="container">
-        <h1 class="mt-5">Database Manager</h1>
+
+    <body">
+    <div class="container p-3 my-3 border ">
         <div class="btn-group mb-3">
             <?php foreach ($tables as $table): ?>
                 <a href="?table=<?= $table ?>" class="btn btn-secondary"><?= normalizeTestView($table) ?></a>
