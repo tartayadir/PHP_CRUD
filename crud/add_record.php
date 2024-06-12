@@ -27,7 +27,7 @@ require '../components/navbar.php';
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5">Add Record to <?= $selectedTable ?></h1>
+    <h1 class="mt-5">Add Record to <?= normalizeTestView($selectedTable) ?></h1>
     <form method="post">
         <?php foreach ($columns as $column): ?>
             <div class="form-group">
