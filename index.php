@@ -1,5 +1,6 @@
 <?php
 require './controller/controller.php';
+require './util/pipes.php';
 $tables = getTables($GLOBALS['pdo']);
 $selectedTable = isset($_GET['table']) ? $_GET['table'] : $tables[0];
 $data = getTableData($GLOBALS['pdo'], $selectedTable);
@@ -21,15 +22,15 @@ $data = getTableData($GLOBALS['pdo'], $selectedTable);
     <h1 class="mt-5">Database Manager</h1>
     <div class="btn-group mb-3">
         <?php foreach ($tables as $table): ?>
-            <a href="?table=<?= $table ?>" class="btn btn-secondary"><?= $table ?></a>
+            <a href="?table=<?= $table ?>" class="btn btn-secondary"><?= normalizeTestView($table) ?></a>
         <?php endforeach; ?>
     </div>
-    <a href="crud/add_record.php?table=<?= $selectedTable ?>" class="btn btn-primary mb-3">Add New Record</a>
+    <a href="./crud/add_record.php?table=<?= $selectedTable ?>" class="btn btn-primary mb-3">Add New Record</a>
     <table class="table table-bordered">
         <thead>
         <tr>
             <?php foreach ($data['columns'] as $column): ?>
-                <th><?= $column ?></th>
+                <th><?= normalizeTestView($column) ?></th>
             <?php endforeach; ?>
             <th>Edit</th>
             <th>Delete</th>
@@ -41,8 +42,8 @@ $data = getTableData($GLOBALS['pdo'], $selectedTable);
                 <?php foreach ($data['columns'] as $column): ?>
                     <td><?= $row[$column] ?></td>
                 <?php endforeach; ?>
-                <td><a href="crud/edit_record.php?table=<?= $selectedTable ?>&id=<?= $row['id'] ?>" class="btn btn-warning">Edit</a></td>
-                <td><a href="crud/delete_record.php?table=<?= $selectedTable ?>&id=<?= $row['id'] ?>" class="btn btn-danger">Delete</a></td>
+                <td><a href="./crud/edit_record.php?table=<?= $selectedTable ?>&id=<?= array_values($row)[0] ?>" class="btn btn-warning">Edit</a></td>
+                <td><a href="./crud/delete_record.php?table=<?= $selectedTable ?>&id=<?= array_values($row)[0] ?>" class="btn btn-danger">Delete</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

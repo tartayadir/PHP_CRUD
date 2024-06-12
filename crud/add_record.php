@@ -1,5 +1,6 @@
 <?php
 require '../controller/controller.php';
+require '../util/pipes.php';
 $selectedTable = $_GET['table'];
 $columns = getTableData($GLOBALS['pdo'], $selectedTable)['columns'];
 
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post">
         <?php foreach ($columns as $column): ?>
             <div class="form-group">
-                <label for="<?= $column ?>"><?= $column ?></label>
+                <label for="<?= $column ?>"><?= normalizeTestView($column) ?></label>
                 <input type="text" class="form-control" id="<?= $column ?>" name="<?= $column ?>" required>
             </div>
         <?php endforeach; ?>

@@ -19,7 +19,8 @@ function getTableData($pdo, $table) {
 }
 
 function getRecord($pdo, $table, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE id = :id");
+    $idColumnName = resolveIdColumnName($table);
+    $stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE " . $idColumnName . " = :id");
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,7 +28,6 @@ function getRecord($pdo, $table, $id) {
 
 function addRecord($pdo, $table, $data) {
     $columns = array_keys($data);
-    $values = array_values($data);
 
     $placeholders = array_map(function($col) { return ':' . $col; }, $columns);
 
@@ -41,9 +41,16 @@ function addRecord($pdo, $table, $data) {
 }
 
 function updateRecord($pdo, $table, $id, $data) {
-    $sets = array_map(function($col) { return $col . ' = :' . $col; }, array_keys($data));
+    $idColumnName = resolveIdColumnName($table);
+    $sets = array_map(function($col) use ($idColumnName) {
+        if ($col == 'id') {
+            return $col . ' = :id';
+        }
 
-    $stmt = $pdo->prepare("UPDATE " . $table . " SET " . implode(', ', $sets) . " WHERE id = :id");
+        return $col . ' = :' . $col;
+    }, array_keys($data));
+
+    $stmt = $pdo->prepare("UPDATE " . $table . " SET " . implode(', ', $sets) . " WHERE " . $idColumnName ." = :id");
 
     foreach ($data as $column => $value) {
         $stmt->bindValue(':' . $column, $value);
@@ -54,8 +61,25 @@ function updateRecord($pdo, $table, $id, $data) {
 }
 
 function deleteRecord($pdo, $table, $id) {
-    $stmt = $pdo->prepare("DELETE FROM " . $table . " WHERE id = :id");
+    $idColumnName = resolveIdColumnName($table);
+    $stmt = $pdo->prepare("DELETE FROM " . $table . " WHERE " . $idColumnName . " = :id");
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
 }
-?>
+
+function resolveIdColumnName($table) {
+    global $columnName;
+    switch ($table) {
+        case "buecher_has_sparten":
+        case "buecher_has_lieferanten":
+            $columnName = "buecher_buecher_id";
+            break;
+        case "autoren_has_buecher":
+            $columnName = "autoren_autoren_id";
+            break;
+        default:
+            $columnName = $table . "_id";
+    }
+
+    return $columnName;
+}
